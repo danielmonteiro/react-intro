@@ -11,7 +11,8 @@ class App extends Component {
       { name: 'Nome 1', age: 10 },
       { name: 'Nome 2', age: 20 },
       { name: 'Nome 3', age: 30 }
-    ]
+    ],
+    showPerson: false
   }
 
   switchNameHandler = (newName) => {
@@ -36,6 +37,12 @@ class App extends Component {
     );
   }
 
+  togglePersonHandler = () => {
+    this.setState({
+      showPerson: !this.state.showPerson
+    });
+  }
+
   render() {
 
     const styleButton = {
@@ -44,6 +51,16 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
+
+    let extraPerson = null;
+
+    if(this.state.showPerson) {
+      extraPerson = (
+        <Person
+          name="Extra person"
+          age="100" />
+      );
+    }
 
     return (
       <div className="App">
@@ -55,22 +72,34 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
 
+        <button onClick={this.togglePersonHandler}>Toggle Person</button>
+
+        <br />
+
         <button 
           style={styleButton}
           onClick={() => this.switchNameHandler('Arrow function')}>Switch Name</button>
 
-        <Person 
-          change={this.onChangeName}
-          click={this.switchNameHandler.bind(this, 'Event bind')}
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age}>content children</Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age} />
+        {
+          this.state.showPerson ?
+            <div>
+              <Person 
+                change={this.onChangeName}
+                click={this.switchNameHandler.bind(this, 'Event bind')}
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age} />
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age}>content children</Person>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age} />
+            </div>
+          : null
+        }
 
+        {extraPerson}
+        
         <ClassBased prop1="teste" />
       </div>
     );
