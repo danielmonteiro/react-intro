@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Radium, { StyleRoot } from 'radium';
 import logo from './logo.svg';
-import './App.css';
+import classes from './App.css';
 import Person from './Person';
 import ClassBased from './ClassBased';
 
@@ -48,19 +47,8 @@ class App extends Component {
 
   render() {
 
-    const styleButton = {
-      backgroundColor: 'green',
-      color: 'white',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        color: 'black',
-        backgroundColor: 'lightgreen'
-      }
-    };
-
     let persons = null;
+    let btnClass = '';
 
     if(this.state.showPerson) {
       persons = (
@@ -79,41 +67,36 @@ class App extends Component {
         </div>
       );
 
-      styleButton.backgroundColor = 'red';
-      styleButton[':hover'] = {
-        color: 'black',
-        backgroundColor: 'salmon'
-      }
+      btnClass = classes.Red;
+
     }
 
-    const classes = ['App-title'];
+    const assignedClasses = ['App-title'];
     if(this.state.persons.length <= 1){
-      classes.push('red');
+      assignedClasses.push('red');
     }else if(this.state.persons.length <= 2){
-      classes.push('orange');
+      assignedClasses.push('orange');
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className={classes.join(' ')}>Welcome to React</h1>
-          </header>
+      <div className={classes.App}>
+        <header className={classes["App-header"]}>
+          <img src={logo} className={classes["App-logo"]} alt="logo" />
+          <h1 className={assignedClasses.join(' ')}>Welcome to React</h1>
+        </header>
 
-          <button 
-            style={styleButton}
-            onClick={this.togglePersonHandler}>Toggle Person</button>
+        <button 
+          className={btnClass}
+          onClick={this.togglePersonHandler}>Toggle Person</button>
 
-          <br />
+        <br />
 
-          {persons}
-          
-          <ClassBased prop1="teste" />
-        </div>
-      </StyleRoot>
+        {persons}
+        
+        <ClassBased prop1="teste" />
+      </div>
     );
   }
 }
 
-export default Radium(App);
+export default App;
